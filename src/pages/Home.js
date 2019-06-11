@@ -17,7 +17,7 @@ class Home extends React.Component {
      email: "",
      senha: "",
      tipo: "salao",
-     listIntem: []
+     
 
    }
  }  

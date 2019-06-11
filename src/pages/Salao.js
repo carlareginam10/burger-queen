@@ -18,16 +18,13 @@ class Salao extends React.Component{
     super(props);
     this.state = {
      
-      name: "", 
-      listIntem: [],     
-      comprar: []
+      nameClient: "",
+      nameFunc: "",     
+      comprar: [],
+      listIntem:[],
 
     }
-    // {
-    //   nome,
-    //   nomef,
-    //   comprar
-    // }
+   
   }
   componentDidMount(){
     database.collection('laboratoria').get()
@@ -45,10 +42,12 @@ class Salao extends React.Component{
 
   handleClick = ()=> {
     const object = {
-      name: this.state.name,     
+      nameClient: this.state.nameClient,   
+      nameFunc: this.state.nameFunc,
+      comprar: this.state.comprar,  
         }
 
-    // database.collection('laboratoria').add(object)
+    database.collection('laboratoria').add(object)
     // this.setState({
     //   listIntem: this.state.listIntem.concat(object).reverse()
       
@@ -86,8 +85,8 @@ class Salao extends React.Component{
             return(
         <div className="App">
            <header className="App-header teste">          
-               <input value={this.state.name} placeholder="Digite o nome do cliente" onChange={(e)=> this.handleChange(e,"name")} />
-                <Button text="publicar" onClick ={this.handleClick}/>
+               <input value={this.state.nameClient} placeholder="Digite o nome do cliente" onChange={(e)=> this.handleChange(e,"nameClient")} />
+               
              {
                this.state.listIntem.map(item =>{
                  return <p> Cliente: {item.name} </p>
@@ -117,6 +116,7 @@ class Salao extends React.Component{
                 <hr></hr>
                 <h1>Total</h1>
                 <p>Valor Toral: {valorTotal}</p>
+                <Button text="finalizar" onClick ={this.handleClick}/>
             </div>
            </header>
        </div>
