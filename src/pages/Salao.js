@@ -1,37 +1,38 @@
 import React from 'react';
-import '../Salao.css';
-import Button from '../button';
-// import Counter from './counter.js;'
+import '../components/App.css';
+import '../components/Input.css';
+import Button from '../components/button';
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import firebase from '../firebaseConfig';
 import withFirebaseAuth from 'react-with-firebase-auth';
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import DataMenuOne from "../data/menuOne";
-import DataMenuTwo from  "../data/menuTwo";
-
+// import DataMenuTwo from  "../data/menuTwo";
 
 const firebaseAppAuth = firebase.auth();
 const database = firebase.firestore();
 
+let USER_ID = sessionStorage['USER_ID'];
+// if (!USER_ID) window.location.href = 'home.html';
+console.log("usuario",USER_ID);
 
 class Salao extends React.Component{
   constructor(props){
     super(props);
-    this.state = {
-     
+    this.state = {     
       nameClient: "",
       nameFunc: "",     
       comprar: [],
       listIntem:[],
-
     }
-   
   }
   componentDidMount(){
     database.collection('laboratoria').get()
     .then((querySnapshot)=> {
       const data= querySnapshot.docs.map(doc =>doc.data())
       this.setState({listIntem: data})
-
     });
   }
   handleChange = (event, element) => {
@@ -45,7 +46,7 @@ class Salao extends React.Component{
       nameClient: this.state.nameClient,   
       nameFunc: this.state.nameFunc,
       comprar: this.state.comprar,  
-        }
+    }
 
     database.collection('laboratoria').add(object)
     // this.setState({
@@ -80,44 +81,80 @@ class Salao extends React.Component{
       const valorTotal = this.state.comprar.reduce((acc, cur) => 
       {
         return acc + (cur.quantidade * cur.price)
-      }, 0);
-    
-            return(
+      }, 0);    
+        return(
         <div className="App">
-           <header className="App-header teste">          
-               <input value={this.state.nameClient} placeholder="Digite o nome do cliente" onChange={(e)=> this.handleChange(e,"nameClient")} />
-               
-             {
-               this.state.listIntem.map(item =>{
-                 return <p> Cliente: {item.name} </p>
-               })
-             }
-            <hr></hr>
-            <div>
-                {DataMenuOne.map((item, i)=>{                
-                  return <div> 
-                            <p>
-                              <button key={i} onClick={()=> {this.clickComprar(item)}}>{item.nameItem} - {item.price} </button>
-                            </p>                            
-                         </div>
-                  }
-                )}          
-            </div> 
-
-            <div >
-              <p>Lista de compras </p>
-              {
-                this.state.comprar.map((produto, i)=>{
-                  return <p key={i}> {produto.quantidade} - {produto.nameItem} : {produto.price * produto.quantidade}  
-                  </p>
-                })
-
-              }
+           <header className="App-header">  
+                <Navbar bg="dark" variant="dark">
+                    <Navbar.Brand href="#home">
+                      <img
+                        alt=""
+                        src="../images/logo.png"
+                        width="70"
+                        height="70"
+                        className="d-inline-block align-top"
+                      />
+                      {' React Bootstrap'}
+                    </Navbar.Brand>
+                </Navbar> 
+                <div className="container">       
+                  <input className="sign-up-name rounded-border" value={this.state.nameClient} placeholder="Digite o nome do cliente" onChange={(e)=> this.handleChange(e,"nameClient")} />
+                </div>
                 <hr></hr>
-                <h1>Total</h1>
-                <p>Valor Toral: {valorTotal}</p>
-                <Button text="finalizar" onClick ={this.handleClick}/>
-            </div>
+                <Container>
+                    <Row>
+                      <Col xs={6} lg={"auto"}>
+                        {/* {
+                          this.state.listIntem.map(item =>{
+                            return <p> Cliente: {item.name} </p>
+                          })
+                        } */}
+                        
+                       
+                          <p className="align-center">Cardápio</p>
+                            {
+                              DataMenuOne.map((item, i)=>{                
+                              return <div>                                         
+                                        <button className="itemButton" key={i} onClick={()=> {this.clickComprar(item)}}>{item.nameItem} - {item.price} </button>
+                                                  
+                                    </div>
+                              }
+                            )}          
+                                         
+                      </Col>
+                      <Col xs={6}  lg={"auto"}>
+                     
+                          <p className="align-center">Pedido</p>
+                          {
+                            this.state.comprar.map((produto, i)=>{
+                              return <div>
+                              <p key={i}> {produto.quantidade} - {produto.nameItem} : {produto.price * produto.quantidade}  
+                              </p>
+                              
+                              
+
+
+                              </div>
+                              
+                              
+                            })
+                          }
+                         
+                      
+                      
+                       </Col>
+                    </Row>                    
+                </Container>
+                <hr></hr>
+                <Container>
+                    <Row> 
+                      <Col xs={12}>  
+                      <h5>Valor Total: {valorTotal}</h5>             
+                          <Button text="Finalizar Pedido" onClick ={this.handleClick}/>                                               
+                      </Col>
+                  </Row> 
+                </Container>           
+            
            </header>
        </div>
       )

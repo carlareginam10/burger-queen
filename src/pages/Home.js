@@ -1,7 +1,7 @@
 import React from 'react';
-import '../App.css';
-import Button from '../button';
-// import Counter from './counter.js;'
+import '../components/App.css';
+import '../components/Input.css';
+import Button from '../components/button';
 import firebase from '../firebaseConfig';
 import withFirebaseAuth from 'react-with-firebase-auth';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
@@ -82,7 +82,7 @@ class Home extends React.Component {
          <div className="background-image">
            <figure className="logo"><img scr="../images/logo.png"></img></figure>
          </div>
-         <main className="container">
+         <main className="containerLogin">
             <ul className="edit-align">
               <li className="sign-in font-size-m choice-login active" onClick={this.showLogin} >LOGIN</li>
               <li className="sign-up font-size-m choice-login" onClick={this.showCadastro}>CADASTRO</li>
@@ -99,7 +99,7 @@ class Home extends React.Component {
              <input className="sign-up-name rounded-border" value={this.state.name} placeholder="name completo" onChange={(e) => this.handleChange(e, "name")} />
              <input className="sign-in-email rounded-border" value={this.state.email} placeholder="Digite seu email" onChange={(e) => this.handleChange(e, "email")} />
              <input className="sign-in-password rounded-border" value={this.state.senha} placeholder="Digite sua senha" onChange={(e) => this.handleChange(e, "senha")} />
-             <select onChange={(e) => this.handleChange(e, "tipo")} className="sign-up-gender rounded-border">
+             <select onChange={(e) => this.handleChange(e, "tipo")} className="rounded-border">
                <option value="Salao" >Salão</option>
                <option value="Cozinha">Cozinha</option>
              </select>

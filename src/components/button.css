@@ -10,7 +10,19 @@
   border: none;
   border-radius: 10px;
   
-  }
+}
+
+.itemButton {
+  width: 260px;
+  height: 60px;
+  margin: 5px 1px 0;
+  background-color: #C1C1C1;
+  color: #47525E;
+  text-align: left;
+ 
+  border-radius: 10px;
+  
+}
 
  
 
