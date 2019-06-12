@@ -13,7 +13,7 @@ class Home extends React.Component {
  constructor(props) {
    super(props);
    this.state = {
-     name: "",
+     displayName: "",
      email: "",
      senha: "",
      tipo: "salao",
@@ -21,15 +21,15 @@ class Home extends React.Component {
 
    }
  }  
-  showLogin = () => {
-  document.querySelector("divLogin").className="hide";
-  document.querySelector("divLogin").className="show";  
-  }
+  // showLogin = () => {
+  // document.querySelector("divLogin").className="hide";
+  // document.querySelector("divLogin").className="show";  
+  // }
 
-  showCadastro = () => {
-  document.getElementById("divCadastro").className="hide";
-  document.getElementById("divCadastro").className="show";
-  }
+  // showCadastro = () => {
+  // document.getElementById("divCadastro").className="hide";
+  // document.getElementById("divCadastro").className="show";
+  // }
  
   handleChange = (event, element) => {
    const newState = this.state;
@@ -46,7 +46,7 @@ class Home extends React.Component {
        const id = resp.user.uid;
        database.collection('users').doc(id).set({
          email: this.state.email,
-         name: this.state.name,
+         displayName: this.state.displayName,
          tipo: this.state.tipo
        })
        .then(() =>{
@@ -96,7 +96,7 @@ class Home extends React.Component {
              </section>
            </form>
            <form className="section-sign-in divCadastro ">
-             <input className="sign-up-name rounded-border" value={this.state.name} placeholder="name completo" onChange={(e) => this.handleChange(e, "name")} />
+             <input className="sign-up-name rounded-border" value={this.state.displayName} placeholder="name completo" onChange={(e) => this.handleChange(e, "displayName")} />
              <input className="sign-in-email rounded-border" value={this.state.email} placeholder="Digite seu email" onChange={(e) => this.handleChange(e, "email")} />
              <input className="sign-in-password rounded-border" value={this.state.senha} placeholder="Digite sua senha" onChange={(e) => this.handleChange(e, "senha")} />
              <select onChange={(e) => this.handleChange(e, "tipo")} className="rounded-border">

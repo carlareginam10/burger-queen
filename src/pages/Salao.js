@@ -14,9 +14,15 @@ import DataMenuOne from "../data/menuOne";
 const firebaseAppAuth = firebase.auth();
 const database = firebase.firestore();
 
-let USER_ID = sessionStorage['USER_ID'];
-// if (!USER_ID) window.location.href = 'home.html';
-console.log("usuario",USER_ID);
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    console.log("email usuario", user.email)
+    console.log("usuário logado", user)
+  } else {
+    console.log("não encontrado usuario")
+  }
+});
+
 
 class Salao extends React.Component{
   constructor(props){
@@ -103,7 +109,7 @@ class Salao extends React.Component{
                 <hr></hr>
                 <Container>
                     <Row>
-                      <Col xs={6} lg={"auto"}>
+                      <Col xs={6} >
                         {/* {
                           this.state.listIntem.map(item =>{
                             return <p> Cliente: {item.name} </p>
@@ -111,7 +117,8 @@ class Salao extends React.Component{
                         } */}
                         
                        
-                          <p className="align-center">Cardápio</p>
+                          <p className="align-left font-size-m">CARDÁPIO</p>
+                          
                             {
                               DataMenuOne.map((item, i)=>{                
                               return <div>                                         
@@ -122,9 +129,10 @@ class Salao extends React.Component{
                             )}          
                                          
                       </Col>
-                      <Col xs={6}  lg={"auto"}>
+                      <Col xs={6} md="auto"  >
                      
-                          <p className="align-center">Pedido</p>
+                          <p className="align-left font-size-m">PEDIDO</p>
+                          
                           {
                             this.state.comprar.map((produto, i)=>{
                               return <div>
@@ -149,8 +157,8 @@ class Salao extends React.Component{
                 <Container>
                     <Row> 
                       <Col xs={12}>  
-                      <h5>Valor Total: {valorTotal}</h5>             
-                          <Button text="Finalizar Pedido" onClick ={this.handleClick}/>                                               
+                      <p className="align-right">Valor Total: {valorTotal}  <Button  text="Finalizar Pedido" onClick ={this.handleClick}/></p>             
+                                                                        
                       </Col>
                   </Row> 
                 </Container>           

@@ -30,6 +30,10 @@ ul {
   font-size: 16px;
 }
 
+/* .font-color { 
+  
+} */
+
 .background-image {
   display: flex;
   justify-content: center;
@@ -97,8 +101,16 @@ ul {
 
 
 
-.align-center{
-  text-align: center
+.align-left{
+  text-align: left;
+  padding-left: 2px;
+  padding-bottom:  12px;
+}
+
+.align-right{
+  text-align: right;
+  
+  
 }
 
 
