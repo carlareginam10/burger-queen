@@ -5,11 +5,11 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.background {
-  margin: 0;
-  padding: 0;
-  background-color: #464646;
-  font-family: 'Roboto', sans-serif;
+
+
+img-del{
+  margin-left: 15px;
+
 }
 
 ul {
@@ -30,9 +30,7 @@ ul {
   font-size: 16px;
 }
 
-/* .font-color { 
-  
-} */
+
 
 .background-image {
   display: flex;
@@ -47,7 +45,7 @@ ul {
 
 .logo {
   top: 40%;
-  margin: 0;
+  margin-left: 60%;
   padding: 0;
   width: 200px;
   height: 200px;
@@ -57,6 +55,7 @@ ul {
 .logo img {
   height: 100%;
   position: inherit;
+ 
 }
 
 .containerLogin {
@@ -72,14 +71,22 @@ ul {
   margin: 20px 10px 0;
   position: relative;
   padding: 0 30px 15px;
-  border-bottom: 1px solid #707070;
-  color: #707070;
+  border-bottom: 1px solid #C64706;
+  
+  /* border-bottom: 1px solid #707070; */
+  /* color: #707070; */
 }
 
-.choice-login.active {
+/* .choice-login.active {
   border-bottom: 1px solid #C64706;
-  color: #C1C1C1;
+  
+} */
+.fonte-color-p {
+  color:#C64706;
+
 }
+
+
 
 
 
@@ -90,14 +97,7 @@ ul {
   align-items: center;
 }
 
-.hidden {
-  display: none;
-}
 
-
-/* .show{
-  display: block;
-} */
 
 
 

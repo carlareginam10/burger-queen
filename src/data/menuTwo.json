@@ -1,26 +1,26 @@
 [
     {
         "id":1,
-        "nameItem": "Café americano", 
+        "nameItem": "almoço fake", 
         "price": 5.0,
         "img": ""
     },
     {
         "id":1,
-        "nameItem": "Café com leite", 
+        "nameItem": "sei la", 
         "price": 7.0,
         "img": ""
     },
     {
         "id":1,
-        "nameItem": "Sanduíche presunto e queijo", 
+        "nameItem": "outro", 
         "price": 10.0,
         "img": ""
     },
     {
         "id":1,
-        "nameItem": "Suco de fruta natural", 
-        "price": 10.0,
+        "nameItem": "ovo", 
+        "price": 1.0,
         "img": ""
     }
 ]

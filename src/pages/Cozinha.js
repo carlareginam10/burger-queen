@@ -8,10 +8,6 @@ import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import DataMenuOne from "../data/menuOne";
 import DataMenuTwo from  "../data/menuTwo";
 
-
-const firebaseAppAuth = firebase.auth();
-const database = firebase.firestore();
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
@@ -41,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function FullWidthTabs() {
+function FullWidthTabs() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -81,6 +77,8 @@ export default function FullWidthTabs() {
     </div>
   );
 }
+
+export default FullWidthTabs;
 
 
 // function Cozinha() {

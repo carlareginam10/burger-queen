@@ -1,15 +1,18 @@
 import React from 'react';
 import '../components/App.css';
 import '../components/Input.css';
+import logo from '../images/logo.png';
+import del from '../images/del.png';
 import Button from '../components/button';
 import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import firebase from '../firebaseConfig';
 import withFirebaseAuth from 'react-with-firebase-auth';
 import DataMenuOne from "../data/menuOne";
-// import DataMenuTwo from  "../data/menuTwo";
+import DataMenuTwo from  "../data/menuTwo";
 
 const firebaseAppAuth = firebase.auth();
 const database = firebase.firestore();
@@ -32,8 +35,37 @@ class Salao extends React.Component{
       nameFunc: "",     
       comprar: [],
       listIntem:[],
+      showCoffe:true,
+      showLunch:false
     }
   }
+
+  showCoffe(){
+    this.setState({
+      showLunch:false,
+      showOrder: false,
+      showCoffe:true
+         
+    })
+  }
+
+  showLunch(){
+    this.setState({
+      showCoffe:false,
+      showOrder: false,
+      showLunch:true
+    })
+  }
+
+  showOrder(){
+    this.setState({
+      showCoffe:false,
+      showLunch:false,
+      showOrder: true
+
+    })
+  }
+ 
   componentDidMount(){
     database.collection('laboratoria').get()
     .then((querySnapshot)=> {
@@ -90,66 +122,96 @@ class Salao extends React.Component{
       }, 0);    
         return(
         <div className="App">
-           <header className="App-header">  
+           <header className="App-header ">  
                 <Navbar bg="dark" variant="dark">
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand href="/">
                       <img
                         alt=""
-                        src="../images/logo.png"
-                        width="70"
-                        height="70"
+                        src={logo}
+                        width="160"
+                        height="160"
                         className="d-inline-block align-top"
-                      />
-                      {' React Bootstrap'}
-                    </Navbar.Brand>
-                </Navbar> 
-                <div className="container">       
+                      />                      
+                    </Navbar.Brand>  
+                                 
+                </Navbar>   
+                <main className="containerLogin">
+                  <ul className="edit-align">
+                    <Button text="CAFÉ DA MANHÃ" onClick={()=>this.showCoffe()}></Button>
+                    <Button text="ALMOÇO" onClick={()=>this.showLunch()}></Button>
+                    <Button text="PEDIDOS REALIZADOS" onClick={()=>this.showOrder()}></Button>
+                  </ul>
+               </main>  
+                        
+  
+               <div className="container">       
                   <input className="sign-up-name rounded-border" value={this.state.nameClient} placeholder="Digite o nome do cliente" onChange={(e)=> this.handleChange(e,"nameClient")} />
                 </div>
-                <hr></hr>
+                <hr ></hr>
                 <Container>
                     <Row>
-                      <Col xs={6} >
-                        {/* {
-                          this.state.listIntem.map(item =>{
-                            return <p> Cliente: {item.name} </p>
-                          })
-                        } */}
-                        
-                       
-                          <p className="align-left font-size-m">CARDÁPIO</p>
-                          
-                            {
-                              DataMenuOne.map((item, i)=>{                
-                              return <div>                                         
-                                        <button className="itemButton" key={i} onClick={()=> {this.clickComprar(item)}}>{item.nameItem} - {item.price} </button>
-                                                  
-                                    </div>
-                              }
-                            )}          
-                                         
-                      </Col>
-                      <Col xs={6} md="auto"  >
-                     
-                          <p className="align-left font-size-m">PEDIDO</p>
-                          
+                      {
+                        this.state.showCoffe?
+                        <Col xs={6} >
+                          {/* {
+                            this.state.listIntem.map(item =>{
+                              return <p> Cliente: {item.name} </p>
+                            })
+                          } */}                        
+                            <p className="align-left font-size-m fonte-color-p">CARDÁPIO</p>                                                     
+                              {
+                                DataMenuOne.map((item, i)=>{                
+                                return <div>                                         
+                                          <button className="itemButton" key={i} onClick={()=> {this.clickComprar(item)}}>{item.nameItem} - {item.price} </button>
+                                       </div>
+                                }
+                              )}      
+                        </Col>
+                      :null}
+                        {
+                        this.state.showLunch?
+                        <Col xs={6} >
+                          {/* {
+                            this.state.listIntem.map(item =>{
+                              return <p> Cliente: {item.name} </p>
+                            })
+                          } */}                        
+                            <p className="align-left font-size-m fonte-color-p">CARDÁPIO</p>                                                     
+                              {
+                                DataMenuTwo.map((item, i)=>{                
+                                return <div>                                         
+                                          <button className="itemButton" key={i} onClick={()=> {this.clickComprar(item)}}>{item.nameItem} - {item.price} </button>
+                                       </div>
+                                }
+                              )}      
+                        </Col>
+                      :null}
+                       {
+                        this.state.showOrder?
+                        <Col xs={6} >
+                          {/* {
+                            this.state.listIntem.map(item =>{
+                              return <p> Cliente: {item.name} </p>
+                            })
+                          } */}                        
+                            <p className="align-left font-size-m fonte-color-p">PEDIDOS REALIZADOS</p>  
+                            <p className="align-left font-size-m ">Implementando...</p>                                                     
+                               
+                        </Col>
+                      :null}
+                      <Col xs={6} md="auto">                     
+                          <p className="align-left font-size-m fonte-color-p">PEDIDO</p>
                           {
                             this.state.comprar.map((produto, i)=>{
                               return <div>
-                              <p key={i}> {produto.quantidade} - {produto.nameItem} : {produto.price * produto.quantidade}  
-                              </p>
-                              
-                              
-
-
+                                <button className="itemButton  " key={i}> {produto.quantidade} - {produto.nameItem} : {produto.price * produto.quantidade}
+                                <img className="img-del" src={del}></img>
+                                </button>
                               </div>
-                              
-                              
+                                                    
                             })
                           }
                          
-                      
-                      
                        </Col>
                     </Row>                    
                 </Container>
@@ -157,7 +219,7 @@ class Salao extends React.Component{
                 <Container>
                     <Row> 
                       <Col xs={12}>  
-                      <p className="align-right">Valor Total: {valorTotal}  <Button  text="Finalizar Pedido" onClick ={this.handleClick}/></p>             
+                      <p className="align-right font-size-m fonte-color-p">VALOR TOTAL: {valorTotal}  <Button  text="Finalizar Pedido" onClick ={this.handleClick}/></p>             
                                                                         
                       </Col>
                   </Row> 

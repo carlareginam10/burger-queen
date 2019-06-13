@@ -1,8 +1,8 @@
 
 
 .button {
-  width: 140px;
-  height: 35px;
+  width: 180px;
+  height: 55px;
   margin: 20px 5px 0;
   background-color: #C64706;
   color: #C1C1C1;
@@ -11,9 +11,22 @@
   border-radius: 10px;
   
 }
+.button2 {
+ 
+ 
+  color:#C64706;
+  padding: 20px;
+ 
+  
+  
+ 
+
+ 
+  
+}
 
 .itemButton {
-  width: 260px;
+  width: 320px;
   height: 60px;
   margin: 5px 1px 0;
   background-color: #C1C1C1;
