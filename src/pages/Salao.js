@@ -107,9 +107,9 @@ class Salao extends React.Component{
   }
 
   clickBuy = (item) => {
-    const itemIndex = this.state.buy.findIndex((DataMenuOne) =>
+    const itemIndex = this.state.buy.findIndex((dataMenu) =>
        {
-          return DataMenuOne.nameItem === item.nameItem
+          return dataMenu.nameItem === item.nameItem
       })
       if(itemIndex < 0) {
         const newItem = {
@@ -127,12 +127,19 @@ class Salao extends React.Component{
         });
       }
     }
+
+    delEvent = (index, e) => {
+      const buy = this.state.buy
+      buy.splice(index, 1);
+      this.setState({buy:buy})
+    }
    
     render() {
       const amountToPay = this.state.buy.reduce((acc, cur) => 
       {
         return acc + (cur.quant * cur.price)
-      }, 0);    
+      }, 0);  
+       
         return(
         <div className="App">
            <header className="App-header ">  
@@ -204,7 +211,8 @@ class Salao extends React.Component{
                             this.state.buy.map((produto, i)=>{
                               return <div>
                                 <button className="item-button" key={i}> {produto.quant} - {produto.nameItem} : {produto.price * produto.quant} </button>
-                                <img className="img-del" src={del}></img>
+                                <img className="img-del" onClick ={this.delEvent.bind(this, i)} src={del}></img>
+                                
                               </div>
                             })
                           }                         
