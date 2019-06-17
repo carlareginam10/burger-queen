@@ -1,0 +1,74 @@
+[
+    {
+        "id":1,
+        "nameItem": "Hambúrguer simples - Bovino", 
+        "price": 10.0       
+    },
+    {
+        "id":1,
+        "nameItem": "Hambúrguer simples - Frango", 
+        "price": 10.0       
+    },
+    {
+        "id":1,
+        "nameItem": "Hambúrguer simples - Vegano", 
+        "price": 10.0       
+    },
+    {
+        "id":1,
+        "nameItem": "Hambúrguer duplo - Bovino", 
+        "price": 15.0       
+    },
+    {
+        "id":1,
+        "nameItem": "Hambúrguer duplo - Frango", 
+        "price": 15.0       
+    },
+    {
+        "id":1,
+        "nameItem": "Hambúrguer duplo - Vegano", 
+        "price": 15.0       
+    },
+    {
+        "id":1,
+        "nameItem": "Batata frita", 
+        "price": 5.0       
+    },
+    {
+        "id":1,
+        "nameItem": "Anéis de cebola", 
+        "price": 5.0
+     
+    },
+    {
+        "id":1,
+        "nameItem": "Água 500ml", 
+        "price": 5.0       
+    },
+    {
+        "id":1,
+        "nameItem": "Água 750ml", 
+        "price": 7.0       
+    },
+    {
+        "id":1,
+        "nameItem": "Bebida gaseificada 500ml", 
+        "price": 7.0       
+    },
+    {
+        "id":1,
+        "nameItem": "Bebida gaseificada 750ml", 
+        "price": 10.0       
+    },
+    {
+        "id":1,
+        "nameItem": "Queijo Adicional", 
+        "price": 1.0       
+    },
+    {
+        "id":1,
+        "nameItem": "ovo Adicional", 
+        "price": 1.0       
+    }
+    
+]

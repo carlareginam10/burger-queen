@@ -5,11 +5,8 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-
-
-img-del{
+.img-del {
   margin-left: 15px;
-
 }
 
 ul {
@@ -30,8 +27,6 @@ ul {
   font-size: 16px;
 }
 
-
-
 .background-image {
   display: flex;
   justify-content: center;
@@ -44,21 +39,24 @@ ul {
 }
 
 .logo {
-  top: 40%;
-  margin-left: 60%;
+  top: 20%;
+  margin-left: 50%;
   padding: 0;
-  width: 200px;
-  height: 200px;
+  width: 30vw;
+  height: 30vw;
   position: absolute;
 }
 
 .logo img {
   height: 100%;
   position: inherit;
- 
+ }
+
+.padding-top{
+  padding-top:35px;
 }
 
-.containerLogin {
+.container-section {
   width: 80%;
   margin: auto;
   display: flex;
@@ -72,23 +70,11 @@ ul {
   position: relative;
   padding: 0 30px 15px;
   border-bottom: 1px solid #C64706;
-  
-  /* border-bottom: 1px solid #707070; */
-  /* color: #707070; */
 }
 
-/* .choice-login.active {
-  border-bottom: 1px solid #C64706;
-  
-} */
 .fonte-color-p {
   color:#C64706;
-
 }
-
-
-
-
 
 .section-sign-in, .section-sign-up {
   width: 100%;
@@ -97,24 +83,15 @@ ul {
   align-items: center;
 }
 
-
-
-
-
-.align-left{
+.align-left {
   text-align: left;
   padding-left: 2px;
   padding-bottom:  12px;
 }
 
-.align-right{
+.align-right {
   text-align: right;
-  
-  
 }
-
-
-
 
 .edit-align {
   width: 100%;

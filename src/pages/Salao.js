@@ -11,29 +11,30 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import firebase from '../firebaseConfig';
 import withFirebaseAuth from 'react-with-firebase-auth';
-import DataMenuOne from "../data/menuOne";
-import DataMenuTwo from  "../data/menuTwo";
+import DataCoffe from "../data/menuCoffe";
+import DataLunch from  "../data/menuLunch";
 
 const firebaseAppAuth = firebase.auth();
 const database = firebase.firestore();
+var user = firebase.auth().currentUser;
+console.log("usuario", user)
 
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    console.log("email usuario", user.email)
-    console.log("usuário logado", user)
-  } else {
-    console.log("não encontrado usuario")
-  }
-});
-
+// firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     console.log("email usuario", user.email)  
+//   } else {
+//     console.log("nenhum usua´rio logado")
+//   }
+// });
 
 class Salao extends React.Component{
   constructor(props){
     super(props);
     this.state = {     
       nameClient: "",
-      nameFunc: "",     
-      comprar: [],
+      nameFunc: "", 
+      amountToPay:"",    
+      buy: [],
       listIntem:[],
       showCoffe:true,
       showLunch:false
@@ -45,7 +46,6 @@ class Salao extends React.Component{
       showLunch:false,
       showOrder: false,
       showCoffe:true
-         
     })
   }
 
@@ -73,158 +73,155 @@ class Salao extends React.Component{
       this.setState({listIntem: data})
     });
   }
+
   handleChange = (event, element) => {
     const newState = this.state;
     newState[element]=event.target.value
     this.setState(newState);
   }
 
+  resetForm = () => {
+    this.setState({
+        ...this.state,
+        nameClient: "",
+        nameFunc: "",     
+        buy: [],
+    })
+  }
+
   handleClick = ()=> {
     const object = {
       nameClient: this.state.nameClient,   
       nameFunc: this.state.nameFunc,
-      comprar: this.state.comprar,  
+      buy: this.state.buy,  
+      amountToPay: this.state.amountToPay, 
     }
 
     database.collection('laboratoria').add(object)
-    // this.setState({
-    //   listIntem: this.state.listIntem.concat(object).reverse()
-      
-    //   })
-    }
+    .then((querySnapshot)=> {
+      const data= querySnapshot.docs.map(doc =>doc.data())
+      this.setState({listIntem: data})
+    });
+    alert("pedido realizado")
+    this.resetForm();
+  }
 
-  clickComprar = (item) => {
-    const itemIndex = this.state.comprar.findIndex((DataMenuOne) =>
+  clickBuy = (item) => {
+    const itemIndex = this.state.buy.findIndex((DataMenuOne) =>
        {
           return DataMenuOne.nameItem === item.nameItem
       })
       if(itemIndex < 0) {
         const newItem = {
           ...item,
-          quantidade: 1
+          quant: 1
         };
         this.setState({
-          comprar: this.state.comprar.concat(newItem)
+          buy: this.state.buy.concat(newItem)
         });
       } else {
-        let newCompra = this.state.comprar;
-        newCompra[itemIndex].quantidade +=1;
+        let newCompra = this.state.buy;
+        newCompra[itemIndex].quant +=1;
         this.setState({
-          comprar: newCompra
+          buy: newCompra
         });
       }
     }
    
     render() {
-      const valorTotal = this.state.comprar.reduce((acc, cur) => 
+      const amountToPay = this.state.buy.reduce((acc, cur) => 
       {
-        return acc + (cur.quantidade * cur.price)
+        return acc + (cur.quant * cur.price)
       }, 0);    
         return(
         <div className="App">
            <header className="App-header ">  
                 <Navbar bg="dark" variant="dark">
                     <Navbar.Brand href="/">
-                      <img
-                        alt=""
-                        src={logo}
-                        width="160"
-                        height="160"
-                        className="d-inline-block align-top"
-                      />                      
+                      <img src={logo} width="160" height="160" className="d-inline-block align-top"/>                                  
                     </Navbar.Brand>  
-                                 
                 </Navbar>   
-                <main className="containerLogin">
+                <main className="container-section">
                   <ul className="edit-align">
                     <Button text="CAFÉ DA MANHÃ" onClick={()=>this.showCoffe()}></Button>
                     <Button text="ALMOÇO" onClick={()=>this.showLunch()}></Button>
                     <Button text="PEDIDOS REALIZADOS" onClick={()=>this.showOrder()}></Button>
                   </ul>
-               </main>  
-                        
-  
-               <div className="container">       
+               </main>                       
+                  <div className="container-section">       
                   <input className="sign-up-name rounded-border" value={this.state.nameClient} placeholder="Digite o nome do cliente" onChange={(e)=> this.handleChange(e,"nameClient")} />
                 </div>
-                <hr ></hr>
+                <hr></hr>
                 <Container>
-                    <Row>
-                      {
-                        this.state.showCoffe?
-                        <Col xs={6} >
-                          {/* {
-                            this.state.listIntem.map(item =>{
-                              return <p> Cliente: {item.name} </p>
-                            })
-                          } */}                        
-                            <p className="align-left font-size-m fonte-color-p">CARDÁPIO</p>                                                     
-                              {
-                                DataMenuOne.map((item, i)=>{                
-                                return <div>                                         
-                                          <button className="itemButton" key={i} onClick={()=> {this.clickComprar(item)}}>{item.nameItem} - {item.price} </button>
-                                       </div>
+                  <Row>
+                    {
+                      this.state.showCoffe?
+                      <Col xs={6} >
+                        <p className="align-left font-size-m fonte-color-p">CARDÁPIO CAFÉ DA MANHÃ</p>                                                     
+                          {
+                            DataCoffe.map((item, i)=>{                
+                              return <div>                                         
+                                        <button className="item-button" key={i} onClick={()=> {this.clickBuy(item)}}>{item.nameItem} - {item.price} </button>
+                                      </div>
                                 }
                               )}      
                         </Col>
-                      :null}
+                    :null}
+                    {
+                      this.state.showLunch?
+                      <Col xs={6} >
+                        <p className="align-left font-size-m fonte-color-p">CARDÁPIO ALMOÇO</p>                                                     
                         {
-                        this.state.showLunch?
-                        <Col xs={6} >
-                          {/* {
-                            this.state.listIntem.map(item =>{
-                              return <p> Cliente: {item.name} </p>
-                            })
-                          } */}                        
-                            <p className="align-left font-size-m fonte-color-p">CARDÁPIO</p>                                                     
-                              {
-                                DataMenuTwo.map((item, i)=>{                
-                                return <div>                                         
-                                          <button className="itemButton" key={i} onClick={()=> {this.clickComprar(item)}}>{item.nameItem} - {item.price} </button>
-                                       </div>
+                          DataLunch.map((item, i)=>{                
+                            return <div>                                         
+                                      <button className="item-button" key={i} onClick={()=> {this.clickBuy(item)}}>{item.nameItem} - {item.price} </button>
+                                   </div>
                                 }
                               )}      
                         </Col>
-                      :null}
-                       {
+                      :null }
+                      {
                         this.state.showOrder?
                         <Col xs={6} >
-                          {/* {
-                            this.state.listIntem.map(item =>{
-                              return <p> Cliente: {item.name} </p>
-                            })
-                          } */}                        
                             <p className="align-left font-size-m fonte-color-p">PEDIDOS REALIZADOS</p>  
-                            <p className="align-left font-size-m ">Implementando...</p>                                                     
-                               
+                          {                         
+                            this.state.listIntem.map(item =>{
+                              
+                             return <div>                               
+                             <button className="item-button-pedidos" > 
+                              <p>{item.nameClient} </p>
+                              
+                             
+                            </button>                           
+                            </div>
+                             })
+                          } 
                         </Col>
-                      :null}
+                      :null }
                       <Col xs={6} md="auto">                     
-                          <p className="align-left font-size-m fonte-color-p">PEDIDO</p>
+                          <p className="align-left font-size-m fonte-color-p">PEDIDO: {this.state.nameClient}</p>
                           {
-                            this.state.comprar.map((produto, i)=>{
+                            this.state.buy.map((produto, i)=>{
                               return <div>
-                                <button className="itemButton  " key={i}> {produto.quantidade} - {produto.nameItem} : {produto.price * produto.quantidade}
+                                <button className="item-button" key={i}> {produto.quant} - {produto.nameItem} : {produto.price * produto.quant} </button>
                                 <img className="img-del" src={del}></img>
-                                </button>
                               </div>
-                                                    
                             })
-                          }
-                         
+                          }                         
                        </Col>
                     </Row>                    
                 </Container>
                 <hr></hr>
                 <Container>
                     <Row> 
-                      <Col xs={12}>  
-                      <p className="align-right font-size-m fonte-color-p">VALOR TOTAL: {valorTotal}  <Button  text="Finalizar Pedido" onClick ={this.handleClick}/></p>             
-                                                                        
+                      <Col xs={6}>  
+                        <p className=" font-size-m fonte-color-p padding-top">GARÇON: </p>             
+                      </Col>
+                      <Col xs={6}>  
+                        <p className="align-right font-size-m fonte-color-p">VALOR TOTAL: {amountToPay}  <Button  text="Finalizar Pedido" onClick ={this.handleClick}/></p>             
                       </Col>
                   </Row> 
-                </Container>           
-            
+                </Container> 
            </header>
        </div>
       )

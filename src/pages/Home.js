@@ -91,7 +91,7 @@ class Home extends React.Component {
          <div className="background-image">
            <figure className="logo"><img src={logo}></img></figure>
          </div>
-         <main className="containerLogin">
+         <main className="container-section">
             <ul className="edit-align">
               <li className="sign-in font-size-m choice-login fonte-color-p"  onClick={()=>this.showLogin()} >LOGIN</li>
               

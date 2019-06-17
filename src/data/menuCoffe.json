@@ -2,25 +2,21 @@
     {
         "id":1,
         "nameItem": "Café americano", 
-        "price": 5.0,
-        "img": ""
+        "price": 5.0
     },
     {
         "id":1,
         "nameItem": "Café com leite", 
-        "price": 7.0,
-        "img": ""
+        "price": 7.0
     },
     {
         "id":1,
         "nameItem": "Sanduíche presunto e queijo", 
-        "price": 10.0,
-        "img": ""
+        "price": 10.0
     },
     {
         "id":1,
         "nameItem": "Suco de fruta natural", 
-        "price": 10.0,
-        "img": ""
+        "price": 10.0
     }
 ]
