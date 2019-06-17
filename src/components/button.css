@@ -11,6 +11,25 @@
   border-radius: 10px;
 }
 
+.button-style {
+  width:330px;
+  height: 60px;
+  margin: 5px 20px 5px 30px;
+  color:#C1C1C1;
+  text-align: left; 
+  border-radius: 10px;  
+
+}
+
+.button-style-order{
+  width: 270px;
+  height: 60px;
+  margin: 5px 1px 0;
+  color: #C1C1C1;
+  text-align: left; 
+  border-radius: 10px;
+
+}
 
 .item-button {
   width: 270px;
@@ -22,14 +41,19 @@
   border-radius: 10px;  
 }
 
-.item-button-pedidos {
-  width:270px;
-  height: 60px;
-  margin: 5px 1px 0;
+.button-order {
+   background-color:#006699;
+}
+
+
+.button-finished {
   background-color: green;
-  color:#C1C1C1;
-  text-align: left; 
-  border-radius: 10px;  
+    
+}
+
+.button-Preparing {
+   background-color:#663300;
+   
 }
 
  

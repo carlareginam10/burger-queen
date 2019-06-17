@@ -17,6 +17,8 @@ import DataLunch from  "../data/menuLunch";
 const firebaseAppAuth = firebase.auth();
 const database = firebase.firestore();
 var user = firebase.auth().currentUser;
+
+
 console.log("usuario", user)
 
 // firebase.auth().onAuthStateChanged(function(user) {
@@ -195,7 +197,7 @@ class Salao extends React.Component{
                             this.state.listIntem.map(item =>{
                               
                              return <div>                               
-                             <button className="item-button-pedidos" > 
+                             <button className="button-style-order button-order" > 
                               <p>{item.nameClient} </p>
                               
                              
@@ -206,10 +208,11 @@ class Salao extends React.Component{
                         </Col>
                       :null }
                       <Col xs={6} md="auto">                     
-                          <p className="align-left font-size-m fonte-color-p">PEDIDO: {this.state.nameClient}</p>
+                          
                           {
                             this.state.buy.map((produto, i)=>{
                               return <div>
+                                <p className="align-left font-size-m fonte-color-p">PEDIDO: {this.state.nameClient}</p>
                                 <button className="item-button" key={i}> {produto.quant} - {produto.nameItem} : {produto.price * produto.quant} </button>
                                 <img className="img-del" onClick ={this.delEvent.bind(this, i)} src={del}></img>
                                 

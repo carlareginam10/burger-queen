@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
 import Home from "./pages/Home";
 import Salao from "./pages/Salao";
+import Cozinha from "./pages/Cozinha";
 
 
 function App() {
@@ -15,14 +16,14 @@ function App() {
 }
 
 
-function Cozinha() {
-  return (
-    <div>
-      Estamos na cozinha
-    </div>
+// function Cozinha() {
+//   return (
+//     <div>
+//       Estamos na cozinha
+//     </div>
 
-  )
+//   )
 
-}
+// }
 
 export default App;
