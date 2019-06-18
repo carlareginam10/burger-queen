@@ -1,11 +1,10 @@
 import React from 'react';
 import '../components/App.css';
 import '../components/Input.css';
-import logo from '../images/logo.png';
+import Logo from '../images/logo.png';
 import del from '../images/del.png';
 import Button from '../components/button';
 import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -16,25 +15,13 @@ import DataLunch from  "../data/menuLunch";
 
 const firebaseAppAuth = firebase.auth();
 const database = firebase.firestore();
-var user = firebase.auth().currentUser;
 
-
-console.log("usuario", user)
-
-// firebase.auth().onAuthStateChanged(function(user) {
-//   if (user) {
-//     console.log("email usuario", user.email)  
-//   } else {
-//     console.log("nenhum usua´rio logado")
-//   }
-// });
-
-class Salao extends React.Component{
+class Hall extends React.Component{
   constructor(props){
     super(props);
     this.state = {     
-      nameClient: "",
-      nameFunc: "", 
+      clientName: "",
+      userName: "", 
       amountToPay:"",    
       buy: [],
       listIntem:[],
@@ -69,7 +56,7 @@ class Salao extends React.Component{
   }
  
   componentDidMount(){
-    database.collection('laboratoria').get()
+    database.collection('ordered').get()
     .then((querySnapshot)=> {
       const data= querySnapshot.docs.map(doc =>doc.data())
       this.setState({listIntem: data})
@@ -85,21 +72,21 @@ class Salao extends React.Component{
   resetForm = () => {
     this.setState({
         ...this.state,
-        nameClient: "",
-        nameFunc: "",     
+        clientName: "",
+        userName: "",     
         buy: [],
     })
   }
 
   handleClick = ()=> {
     const object = {
-      nameClient: this.state.nameClient,   
-      nameFunc: this.state.nameFunc,
+      clientName: this.state.clientName,   
+      userName: this.state.userName,
       buy: this.state.buy,  
       amountToPay: this.state.amountToPay, 
     }
 
-    database.collection('laboratoria').add(object)
+    database.collection('ordered').add(object)
     .then((querySnapshot)=> {
       const data= querySnapshot.docs.map(doc =>doc.data())
       this.setState({listIntem: data})
@@ -147,7 +134,7 @@ class Salao extends React.Component{
            <header className="App-header ">  
                 <Navbar bg="dark" variant="dark">
                     <Navbar.Brand href="/">
-                      <img src={logo} width="160" height="160" className="d-inline-block align-top"/>                                  
+                      <img src={Logo} width="160" height="160" className="d-inline-block align-top"/>                                  
                     </Navbar.Brand>  
                 </Navbar>   
                 <main className="container-section">
@@ -158,8 +145,8 @@ class Salao extends React.Component{
                   </ul>
                </main>                       
                   <div className="container-section">       
-                  <input className="sign-up-name rounded-border" value={this.state.nameClient} placeholder="Digite o nome do cliente" onChange={(e)=> this.handleChange(e,"nameClient")} />
-                </div>
+                    <input className="sign-up-name rounded-border" value={this.state.clientName} placeholder="Digite o nome do cliente" onChange={(e)=> this.handleChange(e,"clientName")} />
+                  </div>
                 <hr></hr>
                 <Container>
                   <Row>
@@ -170,7 +157,7 @@ class Salao extends React.Component{
                           {
                             DataCoffe.map((item, i)=>{                
                               return <div>                                         
-                                        <button className="item-button" key={i} onClick={()=> {this.clickBuy(item)}}>{item.nameItem} - {item.price} </button>
+                                        <button className="item-button button-style" key={i} onClick={()=> {this.clickBuy(item)}}>{item.nameItem} - {item.price} </button>
                                       </div>
                                 }
                               )}      
@@ -183,7 +170,7 @@ class Salao extends React.Component{
                         {
                           DataLunch.map((item, i)=>{                
                             return <div>                                         
-                                      <button className="item-button" key={i} onClick={()=> {this.clickBuy(item)}}>{item.nameItem} - {item.price} </button>
+                                      <button className="item-button button-style" key={i} onClick={()=> {this.clickBuy(item)}}>{item.nameItem} - {item.price} </button>
                                    </div>
                                 }
                               )}      
@@ -195,27 +182,22 @@ class Salao extends React.Component{
                             <p className="align-left font-size-m fonte-color-p">PEDIDOS REALIZADOS</p>  
                           {                         
                             this.state.listIntem.map(item =>{
-                              
-                             return <div>                               
-                             <button className="button-style-order button-order" > 
-                              <p>{item.nameClient} </p>
-                              
-                             
-                            </button>                           
-                            </div>
+                               return <div>                               
+                                  <button className="button-style-order button-order button-style" > 
+                                      <p>{item.clientName} </p>
+                                  </button>                           
+                              </div>
                              })
                           } 
                         </Col>
                       :null }
-                      <Col xs={6} md="auto">                     
-                          
+                      <Col xs={6} md="auto"> 
+                      <p className="align-left font-size-m fonte-color-p">PEDIDO: {this.state.clientName}</p>                    
                           {
-                            this.state.buy.map((produto, i)=>{
+                            this.state.buy.map((product, i)=>{
                               return <div>
-                                <p className="align-left font-size-m fonte-color-p">PEDIDO: {this.state.nameClient}</p>
-                                <button className="item-button" key={i}> {produto.quant} - {produto.nameItem} : {produto.price * produto.quant} </button>
-                                <img className="img-del" onClick ={this.delEvent.bind(this, i)} src={del}></img>
-                                
+                                <button className="item-button button-style" key={i}> {product.quant} - {product.nameItem} : {product.price * product.quant} </button>
+                                  <img className="img-del" onClick ={this.delEvent.bind(this, i)} src={del}></img>
                               </div>
                             })
                           }                         
@@ -242,7 +224,7 @@ class Salao extends React.Component{
 
 export default withFirebaseAuth ({
   firebaseAppAuth,
-})(Salao);
+})(Hall);
 
 
 

@@ -5,7 +5,6 @@ import logo from '../images/logo.png';
 import Button from '../components/button';
 import firebase from '../firebaseConfig';
 import withFirebaseAuth from 'react-with-firebase-auth';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 const firebaseAppAuth = firebase.auth();
 
 const database = firebase.firestore();
@@ -14,16 +13,14 @@ class Home extends React.Component {
  constructor(props) {
    super(props);
    this.state = {
-     displayName: "",
+     userName: "",
      email: "",
      senha: "",
-     tipo: "salao",
+     type: "hall",
      showLogin:true,
      showCadastro:false
-     
-
    }
- }    
+ } 
  
   handleChange = (event, element) => {
    const newState = this.state;
@@ -55,20 +52,26 @@ class Home extends React.Component {
        const id = resp.user.uid;
        database.collection('users').doc(id).set({
          email: this.state.email,
-         displayName: this.state.displayName,
-         tipo: this.state.tipo
+         userName: this.state.userName,
+         type: this.state.type
        })
        .then(() =>{
-          this.props.history.push(`/${this.state.tipo}`);
+          this.props.history.push(`/${this.state.type}`);
          alert("usuário criado")
         });
       }
-
     })
      .catch(error => alert(error));
   }  
 
- signIn = (e) => {
+  // async getUserById(id) {
+  //   const doc = await this.firestore.collection("users").doc(id).get();
+  //   const user = doc.data();
+  //   user['id'] = id;
+  //   return user;
+  // }  
+
+  signIn = (e) => {
   e.preventDefault();
    this.props.signInWithEmailAndPassword(this.state.email, this.state.senha)
    .then((resp) => { 
@@ -76,11 +79,12 @@ class Home extends React.Component {
      database.collection('users').doc(id).get()
      .then(resp =>{
        const data = resp.data();
-        this.props.history.push(`/${data.tipo}`);
+        this.props.history.push(`/${data.type}`);
       })
     });
  }  
- render() {
+
+  render() {
    if(this.props.error){
      alert(this.props.error)
    }  
@@ -94,14 +98,11 @@ class Home extends React.Component {
          <main className="container-section">
             <ul className="edit-align">
               <li className="sign-in font-size-m choice-login fonte-color-p"  onClick={()=>this.showLogin()} >LOGIN</li>
-              
               <li className="sign-up font-size-m choice-login fonte-color-p" onClick={()=>this.showCadastro()}>CADASTRO</li>
             </ul>
             {
-                this.state.showLogin?
-
-                <form className="section-sign-in divLogin active ">
-                
+              this.state.showLogin?
+                <form className="section-sign-in">                
                 <input className="sign-in-email rounded-border" value={this.state.email} placeholder="Digite seu email" onChange={(e) => this.handleChange(e, "email")} />
                 <input className="sign-in-password rounded-border" value={this.state.senha} placeholder="Digite sua senha" onChange={(e) => this.handleChange(e, "senha")} />
                 <section>
@@ -110,27 +111,22 @@ class Home extends React.Component {
               </form>
              :null
             }
-           {
-                this.state.showCadastro?
-                
-                  
-                  <form className="section-sign-in divCadastro ">
-                    <input className="sign-up-name rounded-border" value={this.state.displayName} placeholder="name completo" onChange={(e) => this.handleChange(e, "displayName")} />
-                    <input className="sign-in-email rounded-border" value={this.state.email} placeholder="Digite seu email" onChange={(e) => this.handleChange(e, "email")} />
-                    <input className="sign-in-password rounded-border" value={this.state.senha} placeholder="Digite sua senha" onChange={(e) => this.handleChange(e, "senha")} />
-                    <select onChange={(e) => this.handleChange(e, "tipo")} className="rounded-border">
-                      <option value="Salao" >Salão</option>
-                      <option value="Cozinha">Cozinha</option>
-                    </select>
-                    <section>
-                      <Button className="sign-in-button " text="CADASTRAR" onClick={this.createUser} />
-                    </section>
-                  </form>
-
-               
-                :null
+            {
+              this.state.showCadastro?              
+                <form className="section-sign-in">
+                  <input className="sign-up-name rounded-border" value={this.state.userName} placeholder="name completo" onChange={(e) => this.handleChange(e, "userName")} />
+                  <input className="sign-in-email rounded-border" value={this.state.email} placeholder="Digite seu email" onChange={(e) => this.handleChange(e, "email")} />
+                  <input className="sign-in-password rounded-border" value={this.state.senha} placeholder="Digite sua senha" onChange={(e) => this.handleChange(e, "senha")} />
+                  <select onChange={(e) => this.handleChange(e, "type")} className="rounded-border">
+                    <option value="Hall" >Salão</option>
+                    <option value="Kitchen">Cozinha</option>
+                  </select>
+                  <section>
+                    <Button className="sign-in-button " text="CADASTRAR" onClick={this.createUser} />
+                  </section>
+                </form>               
+              :null
               }
-
          </main>
        </header>
      </div>

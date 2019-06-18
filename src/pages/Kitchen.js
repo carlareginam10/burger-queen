@@ -2,42 +2,29 @@
 import React from 'react';
 import '../components/App.css';
 import '../components/Input.css';
-import logo from '../images/logo.png';
-import del from '../images/del.png';
+import Logo from '../images/logo.png';
 import Button from '../components/button';
 import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import firebase from '../firebaseConfig';
 import withFirebaseAuth from 'react-with-firebase-auth';
-import DataCoffe from "../data/menuCoffe";
-import DataLunch from  "../data/menuLunch";
 import Cooker from '../images/cooker.png';
 import Back from '../images/back.png';
 import Ok from '../images/ok.png';
 
 const firebaseAppAuth = firebase.auth();
 const database = firebase.firestore();
-var user = firebase.auth().currentUser;
-console.log("usuario", user)
-
-// firebase.auth().onAuthStateChanged(function(user) {
-//   if (user) {
-//     console.log("email usuario", user.email)  
-//   } else {
-//     console.log("nenhum usua´rio logado")
-//   }
-// });
+// var user = firebase.auth().currentUser;
 
 class Cozinha extends React.Component{
   constructor(props){
     super(props);
     this.state = {     
-      nameClient: "",
+      clientName: "",
       nameFunc: "", 
-      amountToPay:"",    
+      amountToPay:"",   
       buy: [],
       listIntem:[],
       showOrder:true,
@@ -72,7 +59,7 @@ class Cozinha extends React.Component{
   }
  
   componentDidMount(){
-    database.collection('laboratoria').get()
+    database.collection('ordered').get()
     .then((querySnapshot)=> {
       const data= querySnapshot.docs.map(doc =>doc.data())
       this.setState({listIntem: data})
@@ -88,7 +75,7 @@ class Cozinha extends React.Component{
   resetForm = () => {
     this.setState({
         ...this.state,
-        nameClient: "",
+        clientName: "",
         nameFunc: "",     
         buy: [],
     })
@@ -96,13 +83,13 @@ class Cozinha extends React.Component{
 
   handleClick = ()=> {
     const object = {
-      nameClient: this.state.nameClient,   
+      clientName: this.state.clientName,   
       nameFunc: this.state.nameFunc,
       buy: this.state.buy,  
       amountToPay: this.state.amountToPay, 
     }
 
-    database.collection('laboratoria').add(object)
+    database.collection('ordered').add(object)
     .then((querySnapshot)=> {
       const data= querySnapshot.docs.map(doc =>doc.data())
       this.setState({listIntem: data})
@@ -150,7 +137,7 @@ class Cozinha extends React.Component{
            <header className="App-header ">  
                 <Navbar bg="dark" variant="dark">
                     <Navbar.Brand href="/">
-                      <img src={logo} width="160" height="160" className="d-inline-block align-top"/>                                  
+                      <img src={Logo} width="160" height="160" className="d-inline-block align-top"/>                                  
                     </Navbar.Brand>  
                 </Navbar>   
                 <main className="container-section">
@@ -158,89 +145,67 @@ class Cozinha extends React.Component{
                     <Button text="PEDIDOS REALIZADOS" onClick={()=>this.showOrder()}></Button>
                     <Button text="PREPARANDO" onClick={()=>this.showPreparing()}></Button>
                     <Button text="PRONTO" onClick={()=>this.showFinished()}></Button>
-                    
                   </ul>
                </main>                       
                <hr></hr>
-               
-                <Container>
+               <Container>
                   <Row>
                   {
-                        this.state.showOrder?
-                        <Col  md={{ span: 8, offset: 2 }} >
-                            <h2 className="align-center font-size-m font-color-h2">PEDIDOS REALIZADOS</h2> 
-                             
+                    this.state.showOrder?
+                      <Col  md={{ span: 8, offset: 2 }} >
+                        <h2 className="align-center font-size-m font-color-h2">PEDIDOS REALIZADOS</h2> 
                           {                         
-                            this.state.listIntem.map(item =>{
-                              
-                             return <div>                               
-                             <button className="button-order button-style " > 
-                              <p>{item.nameClient} </p>                             
-                             
-                            </button> 
-                            <img src={Cooker}></img>       
-                            {/* onClick ={this.delEvent.bind(this, i)}                   */}
-                            </div>
+                            this.state.listIntem.map((item, i) =>{
+                              return <div>                               
+                                <button className="button-order button-style  button-size button-text-color" key={i} > 
+                                <p>{item.clientName} </p>                             
+                                </button> 
+                                <img src={Cooker}></img>       
+                              </div>
                              })
                           } 
                         </Col>
                       :null }
-                    {
-                      this.state.showPreparing?
+                  {
+                    this.state.showPreparing?
                       <Col  md={{ span: 8, offset: 2 }} >
                         <h2 className="align-center font-size-m font-color-h2">PREPARANDO</h2>                                                     
                           {
-                            DataCoffe.map((item, i)=>{                
+                            this.state.listIntem.map((item, i) =>{                
                               return <div>                                         
-                                        <button className="button-Preparing button-style " key={i} onClick={()=> {this.clickBuy(item)}}>{item.nameItem} - {item.price} </button>
-                                        <img  src={Ok}></img>
-                                       
-                                      </div>
+                                  <button className="button-Preparing button-style button-size button-text-color " key={i} > 
+                                  <p>{item.clientName} </p> 
+                                  </button>
+                                  <img  src={Ok}></img>
+                                </div>
                                 }
                               )}      
                         </Col>
                     :null}
                     {
                       this.state.showFinished?
-                      <Col  md={{ span: 8, offset: 2 }} >
-                        <h2 className="align-center font-size-m font-color-h2">PRONTO</h2>                                                     
-                        {
-                          DataLunch.map((item, i)=>{                
-                            return <div>                                         
-                                      <button className="button-finished button-style " key={i} onClick={()=> {this.clickBuy(item)}}>{item.nameItem} - {item.price} </button>
+                        <Col  md={{ span: 8, offset: 2 }} >
+                          <h2 className="align-center font-size-m font-color-h2">PRONTO</h2>                                                     
+                            {
+                              this.state.listIntem.map((item, i) =>{                 
+                                  return <div>                                         
+                                      <button className="button-finished button-style button-size button-text-color " key={i} >
+                                      {item.clientName}
+                                      </button>
                                       <img src={Back}></img>
-                                   </div>
+                                  </div>
                                 }
                               )}      
                         </Col>
                       :null }
-                     
-                      {/* <Col xs={6} md="auto">                     
-                          <p className="align-left font-size-m fonte-color-p">PEDIDO: {this.state.nameClient}</p>
-                          {
-                            this.state.buy.map((produto, i)=>{
-                              return <div>
-                                <button className="item-button" key={i}> {produto.quant} - {produto.nameItem} : {produto.price * produto.quant} </button>
-                                <img className="img-del" onClick ={this.delEvent.bind(this, i)} src={del}></img>
-                                
-                              </div>
-                            })
-                          }                         
-                       </Col> */}
-                    </Row>                    
+                     </Row>                    
                 </Container>
                 <hr></hr>
-               
            </header>
        </div>
       )
     }
 }
-
-
 export default withFirebaseAuth ({
   firebaseAppAuth,
 })(Cozinha);
-
-
-
