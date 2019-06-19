@@ -16,6 +16,7 @@ import DataLunch from  "../data/menuLunch";
 const firebaseAppAuth = firebase.auth();
 const database = firebase.firestore();
 
+
 class Hall extends React.Component{
   constructor(props){
     super(props);
@@ -192,7 +193,8 @@ class Hall extends React.Component{
                         </Col>
                       :null }
                       <Col xs={6} md="auto"> 
-                      <p className="align-left font-size-m fonte-color-p">PEDIDO: {this.state.clientName}</p>                    
+                      <p className="align-left font-size-m fonte-color-p">PEDIDO: {this.state.clientName
+                      }</p>                    
                           {
                             this.state.buy.map((product, i)=>{
                               return <div>

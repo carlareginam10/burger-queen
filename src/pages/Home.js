@@ -64,12 +64,7 @@ class Home extends React.Component {
      .catch(error => alert(error));
   }  
 
-  // async getUserById(id) {
-  //   const doc = await this.firestore.collection("users").doc(id).get();
-  //   const user = doc.data();
-  //   user['id'] = id;
-  //   return user;
-  // }  
+    
 
   signIn = (e) => {
   e.preventDefault();
@@ -80,9 +75,13 @@ class Home extends React.Component {
      .then(resp =>{
        const data = resp.data();
         this.props.history.push(`/${data.type}`);
+       
       })
     });
- }  
+ } 
+
+  
+  
 
   render() {
    if(this.props.error){
