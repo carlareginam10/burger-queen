@@ -16,7 +16,7 @@ import Ok from '../images/ok.png';
 
 const firebaseAppAuth = firebase.auth();
 const database = firebase.firestore();
-// var user = firebase.auth().currentUser;
+
 
 class Cozinha extends React.Component{
   constructor(props){
@@ -63,6 +63,15 @@ class Cozinha extends React.Component{
     .then((querySnapshot)=> {
       const data= querySnapshot.docs.map(doc =>doc.data())
       this.setState({listIntem: data})
+    });
+    firebaseAppAuth.onAuthStateChanged((user) => {
+      database.collection('users').doc(user.uid).get()
+        .then(querySnapshot => {          
+          const server = querySnapshot.data().userName
+          this.setState({
+          server: server
+        })
+      })            
     });
   }
 
@@ -201,6 +210,13 @@ class Cozinha extends React.Component{
                      </Row>                    
                 </Container>
                 <hr></hr>
+                <Container>
+                    <Row> 
+                      <Col xs={6}>  
+                        <p className=" font-size-m fonte-color-p padding-top">USUÁRIO LOGADO: {this.state.server} </p>             
+                      </Col>                     
+                  </Row> 
+                </Container> 
            </header>
        </div>
       )

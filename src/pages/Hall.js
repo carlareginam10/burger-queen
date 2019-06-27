@@ -61,8 +61,19 @@ class Hall extends React.Component{
     .then((querySnapshot)=> {
       const data= querySnapshot.docs.map(doc =>doc.data())
       this.setState({listIntem: data})
+    })
+    firebaseAppAuth.onAuthStateChanged((user) => {
+      database.collection('users').doc(user.uid).get()
+        .then(querySnapshot => {          
+          const server = querySnapshot.data().userName
+          this.setState({
+          server: server
+        })
+      })            
     });
   }
+
+
 
   handleChange = (event, element) => {
     const newState = this.state;
@@ -210,7 +221,7 @@ class Hall extends React.Component{
                 <Container>
                     <Row> 
                       <Col xs={6}>  
-                        <p className=" font-size-m fonte-color-p padding-top">GARÇON: </p>             
+                        <p className=" font-size-m fonte-color-p padding-top">GARÇON: {this.state.server} </p>             
                       </Col>
                       <Col xs={6}>  
                         <p className="align-right font-size-m fonte-color-p">VALOR TOTAL: {amountToPay}  <Button  text="Finalizar Pedido" onClick ={this.handleClick}/></p>             
