@@ -1,0 +1,40 @@
+[debug] [2019-07-09T17:24:24.122Z] ----------------------------------------------------------------------
+[debug] [2019-07-09T17:24:24.288Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Carla\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-07-09T17:24:24.289Z] CLI Version:   6.10.0
+[debug] [2019-07-09T17:24:24.290Z] Platform:      win32
+[debug] [2019-07-09T17:24:24.290Z] Node Version:  v10.15.3
+[debug] [2019-07-09T17:24:26.714Z] Time:          Tue Jul 09 2019 14:24:24 GMT-0300 (GMT-03:00)
+[debug] [2019-07-09T17:24:26.714Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-09T17:24:27.179Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-09T17:24:27.181Z] > authorizing via signed-in user
+[debug] [2019-07-09T17:24:27.181Z] [iam] checking project burger-queen-308e3 for permissions ["firebase.projects.get"]
+[debug] [2019-07-09T17:24:27.187Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-07-09T17:24:27.188Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-07-09T17:24:27.596Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-09T17:24:27.942Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/burger-queen-308e3:testIamPermissions  
+
+[debug] [2019-07-09T17:24:28.971Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-09T17:24:28.977Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/burger-queen-308e3  
+ 
+[debug] [2019-07-09T17:24:29.872Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\Carla\Documents\Laboratória\burger-queen'...
+[info] 
+[warn] !  Your functions directory does not specify a Node version.
+   - Learn more at https://firebase.google.com/docs/functions/manage-functions#set_runtime_options
+[debug] [2019-07-09T17:24:29.960Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/294099541135/clients/_:getWebAppConfig  
+ 
+[debug] [2019-07-09T17:24:29.967Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/294099541135:getServerAppConfig  
+ 
+[debug] [2019-07-09T17:24:30.445Z] <<< HTTP RESPONSE 200
+[info] +  functions: Emulator started at http://localhost:5001
+[debug] [2019-07-09T17:24:30.586Z] <<< HTTP RESPONSE 200
+[info] i  functions: Watching "C:\Users\Carla\Documents\Laboratória\burger-queen\functions" for Cloud Functions...
+[info] i  hosting: Serving hosting files from: build
+[info] +  hosting: Local server: http://localhost:5000
+[debug] [2019-07-09T17:24:34.494Z] Functions runtime initialized.
+[debug] [2019-07-09T17:24:34.496Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[warn] !  The Cloud Functions emulator requires the module "firebase-functions-test" to be installed as a development dependency. To fix this, run "npm install --save-dev firebase-functions-test" in your functions directory.
+[info] i  functions: Your functions could not be parsed due to an issue with your node_modules (see above)
